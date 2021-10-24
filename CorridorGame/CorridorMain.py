@@ -1,17 +1,17 @@
 import pygame as p
 from corridor.CorridorGame import CorridorEngine
 
-width = heigth = 500
-dimension = 18
+width = heigth = 400
+dimension = 17
 size = heigth // dimension
 max_fps = 15
 images = {}
 
 
 def LoadImages():
-    pieces = ["pl1", "pl2"]
+    pieces = ["Pl1", "Pl2"]
     for piece in pieces:
-        images["pieces"] = p.transform.scale(p.image.load("images/pawn.png"), (size, size))
+        images[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (size, size))
 
 
 def main():
@@ -20,6 +20,7 @@ def main():
     clock = p.time.Clock()
     screen.fill(p.Color('White'))
     gs = CorridorEngine.GameState()
+    print(gs.board)
     LoadImages()
     running = True
     while running:
@@ -29,7 +30,6 @@ def main():
         drawGameState(screen, gs)
         clock.tick(max_fps)
         p.display.flip()
-
 
 def drawGameState(screen, gs):
     drawBoard(screen)
@@ -48,7 +48,7 @@ def drawPieces(screen, board):
     for r in range(dimension):
         for c in range(dimension):
             piece = board[r][c]
-            if piece != "." and piece != '|':
+            if piece != "." and piece != '|' and piece != '-' and piece != ' ':
                 screen.blit(images[piece], p.Rect(c * size, r * size, size, size))
 
 
